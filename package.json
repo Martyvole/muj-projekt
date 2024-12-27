@@ -1,10 +1,62 @@
-{
-  "name": "moje-dochazka",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+// app.js
+const express = require('express');
+const path = require('path');
+
+const app = express();
+
+// Sem si ukládáme záznamy docházky (Příchod/Odchod).
+// V reálu by to byla databáze, ale pro ukázku stačí pole v paměti.
+const attendanceRecords = [];
+
+// Express dokáže zpracovat JSON v těle requestu (kdyby bylo potřeba).
+app.use(express.json());
+
+// Pomocné funkce na formátování času a data
+function getCurrentTime() {
+  const d = new Date();
+  // Vrátí např. "10:15:42"
+  return d.toLocaleTimeString('cs-CZ', { hour12: false });
 }
+function getCurrentDate() {
+  const d = new Date();
+  // Vrátí např. "3. 4. 2024"
+  return d.toLocaleDateString('cs-CZ');
+}
+
+// 1) Endpoint: PŘÍCHOD (POST /attendance/checkin)
+app.post('/attendance/checkin', (req, res) => {
+  const record = {
+    type: 'checkin',
+    time: getCurrentTime(),
+    date: getCurrentDate()
+  };
+  attendanceRecords.push(record);
+  console.log('CHECK-IN:', record);
+  res.json({ success: true, record });
+});
+
+// 2) Endpoint: ODCHOD (POST /attendance/checkout)
+app.post('/attendance/checkout', (req, res) => {
+  const record = {
+    type: 'checkout',
+    time: getCurrentTime(),
+    date: getCurrentDate()
+  };
+  attendanceRecords.push(record);
+  console.log('CHECK-OUT:', record);
+  res.json({ success: true, record });
+});
+
+// 3) Endpoint: zobrazit všechny záznamy (GET /attendance/log)
+app.get('/attendance/log', (req, res) => {
+  res.json(attendanceRecords);
+});
+
+// Nastavíme složku public jako statickou - tam je index.html s designem
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Spuštění serveru. HOSTING většinou nastavuje PORT do process.env.PORT
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server běží na portu ${PORT}`);
+});
