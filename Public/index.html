@@ -1,54 +1,206 @@
-// app.js
-const express = require('express');
-const path = require('path');
-const app = express();
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    <title>Time Tracking Software to Manage Teams | WebWork Time Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Time tracking software to track work hours, monitor employees, assign shifts, manage project budgets, timesheets, payroll, generate invoices, and more.">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="keywords" content="time tracking software, time tracker">
+    <meta property="og:title" content="Best Time Tracking Software for Improved Productivity | WebWork">
+    <meta property="og:description" content="WebWork Tracker is an easy-to-use time tracking software that simplifies your workflow and helps increase productivity for teams of all sizes.">
+    <meta property="og:url" content="https://www.webwork-tracker.com">
+    <meta property="og:image" content="https://www.webwork-tracker.com/rebranding/images/webwork-tracker-og-image.png?v=6.6.157">
+    <meta property="og:site_name" content="WebWork Tracker">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="_token" content="VJOZ0iaihotpkj7Jvl9VkwtsujhwJZlyL8oZdHTE">
 
-// abychom mohli číst JSON těla v POST
-app.use(express.json());
+    <!-- Favicons a ikony -->
+    <link rel="shortcut icon" href="https://www.webwork-tracker.com/rebranding/images/favicon-16x16.png">
+    <link rel="shortcut icon" href="https://www.webwork-tracker.com/rebranding/images/favicon-18x18.png">
+    <link rel="apple-touch-icon" href="https://www.webwork-tracker.com/rebranding/images/apple-touch-icon.png">
+    <link rel="canonical" href="https://www.webwork-tracker.com"/>
+    <link rel="alternate" href="https://www.webwork-tracker.com" hreflang="en" />
+    <link rel="alternate" href="https://www.webwork-tracker.com/ru" hreflang="ru" />
+    <link rel="alternate" href="https://www.webwork-tracker.com/es" hreflang="es" />
+    <link rel="alternate" href="https://www.webwork-tracker.com/pt" hreflang="pt" />
+    <link rel="alternate" href="https://www.webwork-tracker.com/de" hreflang="de" />
+    <link rel="alternate" href="https://www.webwork-tracker.com/fr" hreflang="fr" />
+    <link rel="alternate" href="https://www.webwork-tracker.com" hreflang="x-default" />
 
-// V této proměnné si budeme ukládat "docházku" (příchody/odchody)
-const attendanceRecords = [];
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://www.webwork-tracker.com/css/general.css?v=6.6.157">
+    <link rel="stylesheet" href="https://www.webwork-tracker.com/css/homepage.css?v=6.6.157">
+    <link rel="stylesheet" href="https://www.webwork-tracker.com/css/aos_styles.css?v=6.6.157">
 
-// Pomocná funkce na formát času
-function getCurrentTime() {
-  const d = new Date();
-  return d.toLocaleTimeString('cs-CZ', { hour12: false });
-}
+    <!-- Font-face (jen ukázka, klidně necháte) -->
+    <style>
+        @font-face {
+            font-family: 'Inter-Bold';
+            src: url('../../fonts/Inter/Inter-Bold/Inter-Bold.woff2') format('woff2'),
+                 url('../../fonts/Inter/Inter-Bold/Inter-Bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Inter-SemiBold';
+            src: url('../../fonts/Inter/Inter-SemiBold/Inter-SemiBold.woff2') format('woff2'),
+                 url('../../fonts/Inter/Inter-SemiBold/Inter-SemiBold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Inter-Regular';
+            src: url('../../fonts/Inter/Inter-Regular/Inter-Regular.woff2') format('woff2'),
+                 url('../../fonts/Inter/Inter-Regular/Inter-Regular.woff') format('woff'),
+                 url('../../fonts/Inter/Inter-Regular/Inter-Regular.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: auto;
+        }
+    </style>
 
-// Endpoint: příchod
-app.post('/attendance/checkin', (req, res) => {
-  const record = {
-    type: 'checkin',
-    time: getCurrentTime(),
-    date: new Date().toLocaleDateString('cs-CZ')
-  };
-  attendanceRecords.push(record);
-  console.log('CHECK-IN', record);
-  res.json({ success: true, record });
+    <!-- JSON-LD skripty pro SEO (schema.org) -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "WebWork Time Tracker",
+        "applicationCategory": "SoftwareApplication",
+        "downloadUrl": "https://www.webwork-tracker.com/download",
+        "featureList": "https://www.webwork-tracker.com/features",
+        "operatingSystem": ["Web platform", "Windows", "Mac OS", "Linux", "iOS", "Android"],
+        "image": "https://www.webwork-tracker.com/rebranding/images/webwork-tracker-og-image.png",
+        "mainEntityOfPage": "https://www.webwork-tracker.com/"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "WebWork Time Tracker",
+        "description": "WebWork Time Tracker is a comprehensive time tracking software ...",
+        "url": "https://www.webwork-tracker.com/",
+        "sameAs": [
+            "https://www.facebook.com/webwork.tracker/",
+            "https://www.linkedin.com/company/webwork-tracker/",
+            "https://twitter.com/WebWork_Tracker",
+            "https://www.youtube.com/channel/UCIn3V50sxF7AnnBbasGmQZQ",
+            "https://www.capterra.com/p/151338/WebWork-Time-Tracker/"
+        ],
+        "logo": "https://www.webwork-tracker.com/images/time-tracker/webwork-tracker-logo.svg",
+        "image": "https://www.webwork-tracker.com/rebranding/images/webwork-tracker-og-image.png",
+        "mainEntityOfPage": "https://www.webwork-tracker.com/"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "https://www.webwork-tracker.com/",
+        "name": "WebWork Time Tracker",
+        "about": "...",
+        "keywords": ["time tracking software"],
+        "description": "WebWork is a time tracking software...",
+        "sameAs": [
+            "https://www.facebook.com/webwork.tracker/",
+            "https://www.linkedin.com/company/webwork-tracker/",
+            "https://twitter.com/WebWork_Tracker",
+            "https://www.youtube.com/channel/UCIn3V50sxF7AnnBbasGmQZQ",
+            "https://www.capterra.com/p/151338/WebWork-Time-Tracker/"
+        ],
+        "image": "https://www.webwork-tracker.com/rebranding/images/webwork-tracker-og-image.png",
+        "mainEntityOfPage": "https://www.webwork-tracker.com/"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Product",
+        "name": "WebWork Time Tracker",
+        "description": "WebWork Time Tracker is a comprehensive software solution ...",
+        "url": "https://www.webwork-tracker.com/",
+        "brand": "WebWork Time Tracker",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "391"
+        },
+        "image": "https://www.webwork-tracker.com/rebranding/images/webwork-tracker-og-image.png",
+        "mainEntityOfPage": "https://www.webwork-tracker.com/"
+    }
+    </script>
+
+</head>
+
+<body>
+<!-- HLAVNI CAST STRANKY -->
+<header> 
+  <!-- ... obří menu WebWork, atd. ... -->
+</header>
+
+<main class="webwork-homepage">
+  <!-- ... VEŠKERÝ OBSAH, co jste posílal: sekce, container, spousta HTML ... -->
+  <!-- ... Část s webwork-info-container, choose-features, atd. ... -->
+</main>
+
+<!-- a pak dole Footer, cookies, apod. -->
+<footer class="footer">
+  <!-- ... obří HTML code z WebWork footeru ... -->
+</footer>
+
+<!-- Skripty, jQuery, atd. (jak v původním kódu) -->
+<script src="https://www.webwork-tracker.com/js/jquery-3.6.0.min.js"></script>
+<script defer src="https://www.webwork-tracker.com/js/jquery.waypoints.min.js"></script>
+<script defer src="https://www.webwork-tracker.com/js/counterup2.js"></script>
+<script defer src="https://www.webwork-tracker.com/js/aos.js"></script>
+<script defer src="https://www.webwork-tracker.com/js/layout_scripts.js?v=6.6.157"></script>
+
+<!-- 
+  ... Dále ve vašem kódu byla spousta inline scriptů 
+  (eventlistener, gtag, atd.) 
+-->
+
+<!-- DOCHÁZKA: Tlačítka a skript -->
+<div style="text-align:center; margin:40px 0;">
+  <button id="btn-checkin" style="padding:10px 20px; margin-right:10px;">Příchod</button>
+  <button id="btn-checkout" style="padding:10px 20px;">Odchod</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btnIn = document.getElementById('btn-checkin');
+  const btnOut = document.getElementById('btn-checkout');
+
+  // PŘÍCHOD
+  btnIn.addEventListener('click', () => {
+    fetch('/attendance/checkin', { method: 'POST' })
+      .then(r => r.json())
+      .then(data => {
+        alert('Příchod zapsán: ' + data.record.time);
+        console.log('CHECK-IN', data);
+      })
+      .catch(err => console.error(err));
+  });
+
+  // ODCHOD
+  btnOut.addEventListener('click', () => {
+    fetch('/attendance/checkout', { method: 'POST' })
+      .then(r => r.json())
+      .then(data => {
+        alert('Odchod zapsán: ' + data.record.time);
+        console.log('CHECK-OUT', data);
+      })
+      .catch(err => console.error(err));
+  });
 });
+</script>
 
-// Endpoint: odchod
-app.post('/attendance/checkout', (req, res) => {
-  const record = {
-    type: 'checkout',
-    time: getCurrentTime(),
-    date: new Date().toLocaleDateString('cs-CZ')
-  };
-  attendanceRecords.push(record);
-  console.log('CHECK-OUT', record);
-  res.json({ success: true, record });
-});
-
-// Endpoint: vypsat všechny záznamy docházky
-app.get('/attendance/log', (req, res) => {
-  res.json(attendanceRecords);
-});
-
-// Statická složka, kde máme HTML
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Spustíme server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log('Server běží na portu', PORT);
-});
+</body>
+</html>
