@@ -1,0 +1,83 @@
+attendance-system/
+├── src/                      # Hlavní zdrojový kód
+│   ├── config/              # Konfigurace
+│   │   ├── database.js      # Nastavení databáze
+│   │   ├── email.js        # Nastavení emailů
+│   │   └── constants.js    # Konstanty (pracovní doba, časové limity...)
+│   │
+│   ├── controllers/        # Kontrolery pro zpracování požadavků
+│   │   ├── authController.js       # Přihlášení, registrace
+│   │   ├── attendanceController.js # Docházka
+│   │   ├── shiftController.js      # Směny
+│   │   ├── vacationController.js   # Dovolené
+│   │   ├── reportController.js     # Reporty a exporty
+│   │   └── adminController.js      # Admin funkce
+│   │
+│   ├── middleware/         # Middleware funkce
+│   │   ├── auth.js         # Ověření JWT
+│   │   ├── validation.js   # Validace vstupů
+│   │   ├── errorHandler.js # Zpracování chyb
+│   │   └── logger.js       # Logování
+│   │
+│   ├── models/            # Datové modely
+│   │   ├── User.js        # Model uživatele
+│   │   ├── Attendance.js  # Model docházky
+│   │   ├── Shift.js       # Model směny
+│   │   ├── Break.js       # Model přestávky
+│   │   └── Vacation.js    # Model dovolené
+│   │
+│   ├── routes/            # Definice API tras
+│   │   ├── authRoutes.js       # Trasy pro auth
+│   │   ├── attendanceRoutes.js # Trasy pro docházku
+│   │   ├── shiftRoutes.js      # Trasy pro směny
+│   │   ├── vacationRoutes.js   # Trasy pro dovolené
+│   │   └── reportRoutes.js     # Trasy pro reporty
+│   │
+│   ├── services/          # Byznys logika
+│   │   ├── authService.js       # Služby pro auth
+│   │   ├── attendanceService.js # Služby pro docházku
+│   │   ├── emailService.js      # Služby pro emaily
+│   │   ├── reportService.js     # Služby pro reporty
+│   │   └── notificationService.js# Služby pro notifikace
+│   │
+│   └── utils/             # Pomocné funkce
+│       ├── dateUtils.js    # Práce s datumy
+│       ├── validators.js   # Validační funkce
+│       └── formatters.js   # Formátování dat
+│
+├── public/               # Statické soubory pro frontend
+│   ├── css/
+│   │   ├── main.css
+│   │   ├── auth.css
+│   │   └── dashboard.css
+│   │
+│   ├── js/
+│   │   ├── auth.js
+│   │   ├── attendance.js
+│   │   ├── dashboard.js
+│   │   └── reports.js
+│   │
+│   └── images/
+│
+├── tests/               # Testy
+│   ├── unit/
+│   │   ├── auth.test.js
+│   │   └── attendance.test.js
+│   │
+│   └── integration/
+│       ├── api.test.js
+│       └── database.test.js
+│
+├── logs/               # Logy aplikace
+│   ├── error.log
+│   └── access.log
+│
+├── docs/               # Dokumentace
+│   ├── api.md
+│   └── setup.md
+│
+├── .env               # Prostředí proměnné
+├── .gitignore        # Git ignorované soubory
+├── package.json      # NPM konfigurace
+├── README.md         # Dokumentace projektu
+└── server.js         # Hlavní soubor aplikace
